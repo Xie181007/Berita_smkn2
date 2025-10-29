@@ -7,12 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <style>
+      /* --- UPGRADE 3D CSS STYLING --- */
       :root {
-          --color-dark-bg: #0d1117;
-          --color-container-bg: #161b22;
-          --color-text-light: #c9d1d9;
-          --color-neon-green: #2ecc71;
-          --color-neon-blue: #3498db;
+          /* Warna Utama (Ditingkatkan untuk efek lebih dalam) */
+          --color-dark-bg: #03080e; 
+          --color-container-bg: #0d1218; 
+          --color-text-light: #e0e9f0;
+          --color-neon-green: #39ff93; /* Hijau yang lebih cerah dan hidup */
+          --color-neon-blue: #00bcd4; /* Biru terang untuk detail */
           --color-alert-red: #e74c3c;
           --color-separator: #444c56;
           
@@ -27,53 +29,91 @@
           box-sizing: border-box;
       }
       
+      /* 1. KEDALAMAN PADA BODY (PERSPEKTIF) */
       body {
           background-color: var(--color-dark-bg);
           color: var(--color-text-light);
           font-family: var(--font-sans);
-          line-height: 1.7;
-          padding: 20px;
+          line-height: 1.6; /* Diperbaiki untuk keterbacaan */
+          padding: 40px 20px; 
           display: flex;
           justify-content: center;
           align-items: flex-start;
           min-height: 100vh;
+          /* Set perspective untuk ilusi 3D */
+          perspective: 1500px; 
       }
       
+      /* 2. KONTAINER UTAMA DENGAN ILUSI MELAYANG */
       .container {
           max-width: 900px;
           width: 100%;
           margin: 0 auto;
-          padding: 30px;
-          background-color: var(--color-container-bg);
-          border-radius: 8px;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 40px var(--color-neon-green, 0.1);
-          border: 1px solid var(--color-separator);
+          padding: 40px;
+          
+          /* Gradien latar belakang kompleks untuk kesan kedalaman */
+          background: linear-gradient(145deg, var(--color-container-bg) 0%, #1a222c 100%);
+          
+          border-radius: 12px;
+          border: 1px solid rgba(57, 255, 147, 0.2); /* Border neon halus */
+          
+          /* Box-shadow berlapis untuk ilusi melayang dan glow */
+          box-shadow: 
+              0 20px 60px rgba(0, 0, 0, 0.8), /* Bayangan Utama (Kedalaman) */
+              0 0 40px rgba(57, 255, 147, 0.4); /* Glow Hijau */
+              
+          /* Rotasi 3D agar terlihat miring di ruang */
+          transform: rotateX(2deg) rotateY(-2deg) scale(0.98); 
+          transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
           overflow: hidden;
       }
 
+      .container:hover {
+          /* Sedikit tegak dan membesar saat di-hover */
+          transform: rotateX(0deg) rotateY(0deg) scale(1);
+          box-shadow: 
+              0 30px 80px rgba(0, 0, 0, 0.9), 
+              0 0 60px var(--color-neon-green);
+      }
+
+      /* 3. EFEK TEKS HOLOGRAM DAN GLOW */
       @keyframes neonGlow {
-          0%, 100% { text-shadow: 0 0 5px var(--color-neon-green), 0 0 10px var(--color-neon-green); }
-          50% { text-shadow: 0 0 10px var(--color-neon-green), 0 0 20px var(--color-neon-green), 0 0 30px var(--color-neon-green); }
+          0%, 100% { 
+              text-shadow: 
+                  0 0 8px var(--color-neon-green), 
+                  0 0 15px var(--color-neon-green),
+                  0 0 25px rgba(57, 255, 147, 0.6); 
+          }
+          50% { 
+              text-shadow: 
+                  0 0 15px var(--color-neon-green), 
+                  0 0 30px var(--color-neon-green), 
+                  0 0 45px rgba(57, 255, 147, 0.8); 
+          }
       }
 
       .header {
-          border-bottom: 2px solid var(--color-neon-green);
-          padding-bottom: 15px;
-          margin-bottom: 40px;
+          /* 4. GARIS PEMISAH BERKILAU */
+          border-bottom: 3px solid var(--color-neon-green);
+          box-shadow: 0 5px 15px rgba(57, 255, 147, 0.4); /* Garis glow */
+          padding-bottom: 20px; /* Jarak yang lebih baik */
+          margin-bottom: 50px;
           text-align: center;
       }
       
       .logo {
           font-family: var(--font-mono);
-          font-size: 3.8rem;
+          font-size: 4rem;
           color: var(--color-text-light);
-          letter-spacing: 4px;
+          letter-spacing: 6px; /* Lebih lebar */
           text-transform: uppercase;
           animation: neonGlow 2s ease-in-out infinite alternate;
           margin-bottom: 5px;
+          opacity: 0.9; /* Efek pudar hologram */
       }
       .logo:hover {
         color: var(--color-neon-green);
+        text-shadow: 0 0 20px var(--color-neon-green);
       }
       
       .tagline {
@@ -81,19 +121,21 @@
           font-size: 0.95rem;
           margin-top: 5px;
           font-weight: 300;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
       }
       
       .meta-info {
           font-family: var(--font-mono);
           font-size: 0.85rem;
           color: var(--color-neon-blue);
-          margin-bottom: 15px;
+          margin-bottom: 25px;
           text-align: center;
-          background-color: rgba(var(--color-neon-blue, #3498db), 0.1);
-          padding: 8px 15px;
-          border-radius: 4px;
-          border: 1px solid var(--color-neon-blue);
+          /* Tampilan bersih dengan garis putus-putus */
+          background-color: transparent; 
+          border: none;
+          border-top: 1px dashed var(--color-separator);
+          border-bottom: 1px dashed var(--color-separator);
+          padding: 10px 0;
           display: block;
       }
       
@@ -102,44 +144,61 @@
           padding: 0 8px;
       }
       
+      /* 5. ARTIKEL TITLE DENGAN ILUSI KEDALAMAN TEKS */
       .article-title {
           font-family: var(--font-serif);
-          font-size: 3rem;
+          font-size: 3.5rem;
           color: var(--color-neon-green);
           line-height: 1.25;
-          margin-bottom: 30px;
-          text-shadow: 0 0 8px rgba(var(--color-neon-green), 0.5);
+          margin-bottom: 35px;
           text-align: center;
+          /* Text-shadow berlapis untuk ilusi kedalaman */
+          text-shadow: 
+              -2px -2px 0px rgba(0, 0, 0, 0.5), 
+              0 0 15px var(--color-neon-green), 
+              0 0 30px rgba(57, 255, 147, 0.6);
       }
 
+      /* 6. VISUAL ALERT (Holographic Panel) */
       .visual-alert {
           width: 100%;
-          height: 280px;
-          background-color: rgba(var(--color-alert-red, #e74c3c), 0.15);
-          border: 3px solid var(--color-alert-red);
+          height: 300px; /* Lebih besar */
+          background-color: #0c0202; /* Lebih gelap dari background kontainer */
+          /* Border 3D 'outset' */
+          border: 5px outset var(--color-alert-red); 
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 35px;
-          box-shadow: 0 0 20px rgba(var(--color-alert-red, #e74c3c), 0.7);
+          margin-bottom: 40px;
+          box-shadow: 0 0 30px var(--color-alert-red);
           border-radius: 6px;
           font-family: var(--font-mono);
-          font-size: 1.7rem;
-          color: #ffdd00;
-          text-shadow: 0 0 10px #ffdd00;
           position: relative;
           overflow: hidden;
+          
+          /* Sedikit rotasi agar terlihat menonjol ke depan */
+          transform: translateZ(20px); 
       }
       .visual-alert p {
-          animation: pulseGlow 1.5s infinite alternate;
+          animation: pulseGlow 1.5s infinite alternate, blink 1s step-end infinite;
           position: relative;
           z-index: 2;
           padding: 15px;
           text-align: center;
+          font-size: 2rem;
+          color: #ffeb3b; /* Kuning Peringatan */
+          font-weight: 700;
+          /* Efek Teks Bergerak/Garis Ganda */
+          text-shadow: 
+              1px 1px 0 #000, 
+              -1px -1px 0 #ff0000;
       }
       @keyframes pulseGlow {
-          0% { transform: scale(1); opacity: 0.8; }
+          0% { transform: scale(1); opacity: 0.9; }
           100% { transform: scale(1.02); opacity: 1; }
+      }
+      @keyframes blink {
+          50% { opacity: 0.8; }
       }
       .visual-alert::before {
           content: '01101011 01101111 01100100 01100101 00100000 01110010 01100001 01101101 01100001 01101000 00100000 01101011 01100001 01101101 01101001 00100000 01100001 01100011 01110100 01101001 01110110 01100001 01110100 01100101';
@@ -148,7 +207,7 @@
           left: 0;
           width: 100%;
           height: 100%;
-          color: rgba(var(--color-neon-green, #2ecc71), 0.1);
+          color: rgba(57, 255, 147, 0.05); /* Opacity code background lebih rendah */
           font-size: 0.8rem;
           word-break: break-all;
           overflow: hidden;
@@ -166,6 +225,7 @@
           margin-bottom: 25px;
           font-size: 1.1rem;
           color: var(--color-text-light);
+          font-weight: 300; /* Lebih tipis untuk modernitas */
           opacity: 0;
           transform: translateY(20px);
           transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -179,14 +239,16 @@
           color: var(--color-neon-blue);
       }
       
+      /* Quote (Kutipan yang Lebih Tegas) */
       .quote {
-          border-left: 5px solid var(--color-neon-green);
-          padding-left: 25px;
-          margin: 35px 0;
-          font-style: italic;
-          color: #aaa;
-          font-size: 1.15rem;
-          background-color: rgba(var(--color-neon-green, #2ecc71), 0.05);
+          border-left: 8px solid var(--color-neon-green); 
+          padding-left: 30px;
+          margin: 40px 0;
+          font-style: normal;
+          color: var(--color-text-light);
+          font-size: 1.2rem;
+          background-color: rgba(57, 255, 147, 0.08); /* Sedikit lebih pekat */
+          box-shadow: 0 0 10px rgba(57, 255, 147, 0.1); /* Tambahkan glow tipis */
           border-radius: 4px;
           padding-top: 15px;
           padding-bottom: 15px;
@@ -218,9 +280,16 @@
       @media (max-width: 600px) {
           body {
               padding: 10px;
+              /* Hapus perspektif 3D pada layar kecil untuk performa */
+              perspective: none; 
           }
           .container {
             padding: 20px;
+            /* Hapus rotasi 3D pada layar kecil */
+            transform: none; 
+          }
+          .container:hover {
+            transform: none;
           }
           .logo {
               font-size: 2.8rem;
@@ -236,6 +305,7 @@
           .visual-alert {
               height: 180px;
               font-size: 1.1rem;
+              transform: none; /* Hapus dorongan 3D */
           }
           .article-content p, .quote {
             font-size: 1rem;
